@@ -1,0 +1,45 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  background: #005854;
+  /* background: rgb(56, 56, 56); */
+  /* background: rebeccapurple; */
+  color: white;
+  font-weight: 300;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+.navbar__title {
+  margin-right: auto;
+  font-family: Luminari, fantasy;
+  font-size: 150%;
+  padding: 12px 16px;
+  vertical-align: middle;
+  color: white;
+}
+
+#selected {
+  background: white;
+  color: black;
+}
+
+.navbar__item {
+  padding: 16px 16px;
+  cursor: pointer;
+  vertical-align: middle;
+  font-weight: bold;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.link {
+  color: white;
+}
+
+.navbar__item:hover {
+  background: white;
+  color: black;
+  margin-left: 5px;
+  margin-right: 5px;
+}

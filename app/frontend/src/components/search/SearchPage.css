@@ -1,0 +1,62 @@
+.searchBar {
+  width: 60%;
+  padding: 12px 20px;
+  margin: 8px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.searchButton {
+  width: 10%;
+  min-width: 100px;
+  background-color: #005854;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.searchButton:hover {
+  background-color: #005854ab;
+}
+
+.select {
+  margin: 2px;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+}
+
+.fbox {
+  margin: 2px;
+}
+
+.tweets {
+  display: flex;
+  flex-direction: column;
+}
+
+.tweetFields {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 10px;
+}
+
+.vl {
+  border-left: 2px solid #005854;
+}
+
+.result {
+  display: flex;
+}
+
+.analysis {
+  min-width: 30%;
+}
