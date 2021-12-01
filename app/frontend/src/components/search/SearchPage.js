@@ -31,24 +31,24 @@ const SearchPage = () => {
                     <div className="filtersText fbox">Filters:</div>
                     <div className="filtersContainer fbox">
                         <select id="poi" className="select">
-                            <option value="" selected>POI...</option>
+                            <option value="">POI...</option>
                             <option value="modi">Modi</option>
                             <option value="biden">Biden</option>
                         </select>
                         <select id="country" className="select">
-                            <option value="" selected>Country...</option>
+                            <option value="">Country...</option>
                             <option value="india">India</option>
                             <option value="usa">USA</option>
                             <option value="mexico">Mexico</option>
                         </select>
                         <select id="language" className="select">
-                            <option value="" selected>Language...</option>
+                            <option value="">Language...</option>
                             <option value="english">English</option>
                             <option value="hindi">Hindi</option>
                             <option value="spanish">Spanish</option>
                         </select>
                         <select id="topic" className="select">
-                            <option value="" selected>Topic...</option>
+                            <option value="">Topic...</option>
                             <option value="covid">Covid</option>
                             <option value="vaccine">Vaccine</option>
                         </select>
@@ -63,14 +63,14 @@ const SearchPage = () => {
             <div className='result'>
                 <div className='tweets'>
                     {tweets.map((tweet,index) => (
-                        <div className='tweetFields'>
+                        <div className='tweetFields' key={index}>
                             <hr/>
                             <div><h4>@{tweet.poi_name}</h4></div>
                             <div>{tweet.tweet_text}</div>
                         </div>
                     ))}
                 </div>
-                <div class="vl"></div>
+                <div className="vl"></div>
                 <div className='analysis'>
                     {tweets.length>0?<h3>Analysis</h3>:''}
                 </div>

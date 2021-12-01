@@ -7,10 +7,10 @@ const Navbar = () => {
     const location = useLocation();
     let searchClass = "";
     let overviewClass = "";
-    if (location.pathname == '/') {
+    if (location.pathname === '/') {
         searchClass = 'selected'
         overviewClass = ''
-    } else if (location.pathname == '/overview') {
+    } else if (location.pathname === '/overview') {
         searchClass = ''
         overviewClass = 'selected'
     }
