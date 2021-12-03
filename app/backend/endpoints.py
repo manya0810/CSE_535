@@ -2,6 +2,7 @@ import flask
 from flask import request, abort
 from flask_cors import CORS, cross_origin
 from solr_connection import SolrConnection
+from news_api import news
 #import requests
 
 app = flask.Flask(__name__)
@@ -18,7 +19,13 @@ def search():
         abort(400, {'error': 'query parameter is required'})
 
     solr = SolrConnection()
+    get_news = news()
+    news_result = get_news.news()
+    results = []
+    for i in range(5):
+        results.append(news_result['articles'][i])
     wiki_text = solr.wiki(query)
+
     res = flask.jsonify({'tweets': solr.convert_query(query)})
     return res
 

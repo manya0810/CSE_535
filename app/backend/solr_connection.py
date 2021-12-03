@@ -45,5 +45,9 @@ class SolrConnection:
     def wiki(self,query):
         wiki = wikipediaapi.Wikipedia()
         page_py = wiki.page(query)
-        text = page_py.summary[0:6000]
-        return text
+        if page_py.exists():
+
+            text = page_py.summary[0:6000]
+            return text
+        else:
+            return None
