@@ -14,9 +14,12 @@ from nltk.stem.snowball import EnglishStemmer, SpanishStemmer
 import detectlanguage
 import pandas as pd
 import os
-import json
 
-nltk.download('punkt')
+nltk.download('perluniprops')
+nltk.download('nonbreaking_prefixes')
+from nltk.tokenize.toktok import ToktokTokenizer
+
+from app.backend.solr_connection import SolrConnection
 
 
 class LSI:
@@ -37,11 +40,38 @@ class LSI:
         self.english_stemmer = english_stemmer()
         self.spanish_stemmer = spanish_stemmer()
         self.tokenizer = tokenizer
+        self.spanish_tokenizer = ToktokTokenizer()
         self.english_stopwords = english_stopwords
         self.spanish_stopwords = spanish_stopwords
+        self.hindi_stopwords = ["मैं", "मुझको", "मेरा", "अपने आप को", "हमने", "हमारा", "अपना", "हम", "आप", "आपका",
+                                "तुम्हारा", "अपने आप", "स्वयं", "वह", "इसे", "उसके", "खुद को", "कि वह", "उसकी", "उसका",
+                                "खुद ही", "यह", "इसके", "उन्होने", "अपने", "क्या", "जो", "किसे", "किसको", "कि", "ये",
+                                "हूँ", "होता है", "रहे", "थी", "थे", "होना", "गया", "किया जा रहा है", "किया है", "है",
+                                "पडा", "होने", "करना", "करता है", "किया", "रही", "एक", "लेकिन", "अगर", "या", "क्यूंकि",
+                                "जैसा", "जब तक", "जबकि", "की", "पर", "द्वारा", "के लिए", "साथ", "के बारे में", "खिलाफ",
+                                "बीच", "में", "के माध्यम से", "दौरान", "से पहले", "के बाद", "ऊपर", "नीचे", "को", "से",
+                                "तक", "से नीचे", "करने में", "निकल", "बंद", "से अधिक", "तहत", "दुबारा", "आगे", "फिर",
+                                "एक बार", "यहाँ", "वहाँ", "कब", "कहाँ", "क्यों", "कैसे", "सारे", "किसी", "दोनो",
+                                "प्रत्येक", "ज्यादा", "अधिकांश", "अन्य", "में कुछ", "ऐसा", "में कोई", "मात्र", "खुद",
+                                "समान", "इसलिए", "बहुत", "सकता", "जायेंगे", "जरा", "चाहिए", "अभी", "और", "कर दिया",
+                                "रखें", "का", "हैं", "इस", "होता", "करने", "ने", "बनी", "तो", "ही", "हो", "इसका", "था",
+                                "हुआ", "वाले", "बाद", "लिए", "सकते", "इसमें", "दो", "वे", "करते", "कहा", "वर्ग", "कई",
+                                "करें", "होती", "अपनी", "उनके", "यदि", "हुई", "जा", "कहते", "जब", "होते", "कोई", "हुए",
+                                "व", "जैसे", "सभी", "करता", "उनकी", "तरह", "उस", "आदि", "इसकी", "उनका", "इसी", "पे",
+                                "तथा", "भी", "परंतु", "इन", "कम", "दूर", "पूरे", "गये", "तुम", "मै", "यहां", "हुये",
+                                "कभी", "अथवा", "गयी", "प्रति", "जाता", "इन्हें", "गई", "अब", "जिसमें", "लिया", "बड़ा",
+                                "जाती", "तब", "उसे", "जाते", "लेकर", "बड़े", "दूसरे", "जाने", "बाहर", "स्थान",
+                                "उन्हें ", "गए", "ऐसे", "जिससे", "समय", "दोनों", "किए", "रहती", "इनके", "इनका", "इनकी",
+                                "सकती", "आज", "कल", "जिन्हें", "जिन्हों", "तिन्हें", "तिन्हों", "किन्हों", "किन्हें",
+                                "इत्यादि", "इन्हों", "उन्हों", "बिलकुल", "निहायत", "इन्हीं", "उन्हीं", "जितना", "दूसरा",
+                                "कितना", "साबुत", "वग़ैरह", "कौनसा", "लिये", "दिया", "जिसे", "तिसे", "काफ़ी", "पहले",
+                                "बाला", "मानो", "अंदर", "भीतर", "पूरा", "सारा", "उनको", "वहीं", "जहाँ", "जीधर", "﻿के",
+                                "एवं", "कुछ", "कुल", "रहा", "जिस", "जिन", "तिस", "तिन", "कौन", "किस", "संग", "यही",
+                                "बही", "उसी", "मगर", "कर", "मे", "एस", "उन", "सो", "अत"]
 
         self.documents = {}
         self.index = defaultdict(Counter)
+        self.solr_connection = SolrConnection()
 
         self.A = None  # term document matrix
         self.U = None  # output of svd
@@ -67,17 +97,28 @@ class LSI:
             print('document_id : {} already indexed.'.format(tweet_id))
             return False
 
-        for token in [t.lower() for t in self.tokenizer(tweet) if t.isalpha()]:
-            if (token in self.english_stopwords) or (token in self.spanish_stopwords):
-                continue
-            if self.english_stemmer and (language == "en"):
-                token = self.english_stemmer.stem(token)
-            if self.spanish_stemmer and (language == "es"):
-                token = self.spanish_stemmer.stem(token)
+        if self.english_stemmer and (language == "en"):
+            for token in [t.lower() for t in self.tokenizer(tweet) if t.isalpha()]:
+                if token in self.english_stopwords:
+                    continue
+                if self.english_stemmer and (language == "en"):
+                    token = self.english_stemmer.stem(token)
+                    self.index[token].update({tweet_id: 1})
 
-            # add this token to defaultdict(Counter)
-            # this document's count is increased by 1 for this token's Counter
-            self.index[token].update({tweet_id: 1})
+        if self.spanish_stemmer and (language == "es"):
+            for token in [t.lower() for t in self.spanish_tokenizer.tokenize(text=tweet, return_str=True) if
+                          t.isalpha()]:
+                if token in self.english_stopwords:
+                    continue
+                if self.spanish_stemmer and (language == "es"):
+                    token = self.spanish_stemmer.stem(token)
+                    self.index[token].update({tweet_id: 1})
+        if language == "hi":
+            for token in [t.lower() for t in tweet.split(" ") if t.isalpha()]:
+                if token in self.hindi_stopwords:
+                    continue
+                else:
+                    self.index[token].update({tweet_id: 1})
 
         self.__update_index = True  # update flag to rebuild index
         self.documents[tweet_id] = tweet  # add document to documents
@@ -148,7 +189,7 @@ class LSI:
         affinity_scores = (np.dot(query_vector, self.doc_rep) / norm(self.doc_rep, axis=0)) * one_by_query_vector_norm_
         return affinity_scores
 
-    def query(self, query_string, top=10):
+    def query(self, query_string, top=50):
         detectlanguage.configuration.api_key = "fdd1ebaafd1a457433d6fca7e3d6bcde"
         language = detectlanguage.simple_detect(query_string)
         if (self.__update_index == True):
@@ -172,41 +213,24 @@ class LSI:
         affinity_scores = self._calc_query_doc_affinity_score(query_vector_mean)
 
         res_doc_index = (-affinity_scores).argsort()[:top]
-        results = []
+        results = {}
         for index in res_doc_index:
             res_doc_id = list(self._document_index_in_A.keys())[index]
-            results.append(self.documents[res_doc_id])
+            results[res_doc_id] = self.documents[res_doc_id]
 
         return results
 
+    def query_execution(self, query):
+        response_json = self.solr_connection.convert_query(query)
+        for tweet in response_json:
+            self.add_doc(tweet["tweet_text"], tweet["id"], tweet["tweet_lang"])
+        self.rebuild_index()
+        response = self.query(query)
+        response_json = []
+        for i in response:
+            for response in response_json:
+                if i == response["id"]:
+                    response_json.append(response)
+                    break
+        return response_json
 
-if __name__ == "__main__":
-    lsi = LSI()
-    list_of_path = ['data/rshah_data']
-        # , 'data/manor_data/keywords', 'data/manor_data/pois', 'data/manya_data']
-
-    for path in list_of_path:
-        files = os.listdir(path)
-        for file in files:
-            docs = pd.read_pickle(f"{path}/{file}").to_dict('records')
-            for tweet in docs:
-                lsi.add_doc(tweet["tweet_text"], tweet["id"], tweet["tweet_lang"])
-
-    list_of_json_path = ['data/sachin_data/json_main', 'data/sachin_data/json_non_poi']
-
-    # for path in list_of_json_path:
-    #     files = os.listdir(path)
-    #     for file in files:
-    #         with open(path + "/" + file) as json_file:
-    #             data = json.load(json_file)
-    #             for tweet in data:
-    #                 lsi.add_doc(tweet["tweet_text"], tweet["id"], tweet["tweet_lang"])
-    lsi.rebuild_index()
-    query = "vaccine passport"
-    response = lsi.query(query)
-    for i in response:
-        print(i)
-
-'''
-
-'''
