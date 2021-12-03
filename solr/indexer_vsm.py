@@ -77,17 +77,17 @@ class Indexer_VSM:
                 },
                 {
                     "name": "tweet_en",
-                    "type": "text_general",
+                    "type": "text_en",
                     "multiValued": "false"
                 },
                 {
                     "name": "tweet_es",
-                    "type": "text_general",
+                    "type": "text_es",
                     "multiValued": "false"
                 },
                 {
                     "name": "tweet_hi",
-                    "type": "text_general",
+                    "type": "text_hi",
                     "multiValued": "false"
                 },
                 {
@@ -138,7 +138,12 @@ class Indexer_VSM:
                     "type": "strings",
                     "multiValued": "true"
                 }
-            ],
+            ]
+        }
+        print(requests.post(self.solr_url + CORE_NAME + "/schema", json=data).json())
+
+    def replace_vsm(self):
+        data ={
             "replace-field-type": [
                 {
                     'name': 'text_en',
@@ -201,11 +206,17 @@ class Indexer_VSM:
                         'filters': [{
                             'class': 'solr.LowerCaseFilterFactory'
                         },
-                            # {
-                            #     'class': 'solr.HindiNormalizationFilterFactory'
-                            # },
+                            {
+                                'class': 'solr.HindiNormalizationFilterFactory'
+                            },
                             {
                                 'class': 'solr.HindiStemFilterFactory'
+                            },
+                            {
+                                'class': 'solr.StopFilterFactory',
+                                'format': 'snowball',
+                                'words': 'lang/stopwords_hi.txt',
+                                'ignoreCase': 'true'
                             }
                             # , {
                             #     'class': 'solr.SynonymFilterFactory',
@@ -224,15 +235,59 @@ class Indexer_VSM:
                         },
                         'filters': [{
                             'class': 'solr.LowerCaseFilterFactory'
-                        }, {
+                        },
+                            {
                             'class': 'solr.HindiStemFilterFactory'
                         },
-                            # {
-                            #     'class': 'HindiNormalizationFilterFactory'
-                            # }
+                        {
+                                'class': 'solr.StopFilterFactory',
+                                'format': 'snowball',
+                                'words': 'lang/stopwords_hi.txt',
+                                'ignoreCase': 'true'
+                        }
                         ]
                     }
-                }, {
+                },
+                {
+                    'name': 'text_general',
+                    'class': 'solr.TextField',
+                    'positionIncrementGap': '100',
+                    'indexAnalyzer': {
+                        'tokenizer': {
+                            'class': 'solr.StandardTokenizerFactory'
+                        },
+                        'filters': [{
+                            'class': 'solr.LowerCaseFilterFactory'
+                        },{
+                            'class': 'solr.StopFilterFactory',
+                            'words': 'stopwords.txt',
+                            'ignoreCase': 'true'
+                        }
+                        ]
+                    },
+                    'similarity': {
+                        'class': 'solr.ClassicSimilarityFactory',
+                    },
+                    'queryAnalyzer': {
+                        'tokenizer': {
+                            'class': 'solr.StandardTokenizerFactory'
+                        },
+                        'filters': [{
+                            'class': 'solr.LowerCaseFilterFactory'
+                        },{
+                            'class': 'solr.SynonymGraphFilterFactory',
+                            'expand': 'true',
+                            'ignoreCase': 'true',
+                            'synonyms': 'synonyms.txt'
+                        },
+                            {
+                                'class': 'solr.StopFilterFactory',
+                                'words': 'stopwords.txt',
+                                'ignoreCase': 'true'
+                            }]
+                    }
+                },
+                {
                     'name': 'text_es',
                     'class': 'solr.TextField',
                     'positionIncrementGap': '100',
@@ -242,12 +297,38 @@ class Indexer_VSM:
                         },
                         'filters': [{
                             'class': 'solr.LowerCaseFilterFactory'
-                        }, {
+                        },
+                            {
                             'class': 'solr.SpanishLightStemFilterFactory'
-                        }]
+                        },
+                        {
+                                'class': 'solr.StopFilterFactory',
+                                'format': 'snowball',
+                                'words': 'lang/stopwords_es.txt',
+                                'ignoreCase': 'true'
+                        }
+                        ]
                     },
                     'similarity': {
                         'class': 'solr.ClassicSimilarityFactory'
+                    },
+                    'queryAnalyzer': {
+                        'tokenizer': {
+                            'class': 'solr.WhitespaceTokenizerFactory'
+                        },
+                        'filters': [{
+                            'class': 'solr.LowerCaseFilterFactory'
+                        },
+                            {
+                                'class': 'solr.SpanishLightStemFilterFactory'
+                            },
+                            {
+                                'class': 'solr.StopFilterFactory',
+                                'format': 'snowball',
+                                'words': 'lang/stopwords_es.txt',
+                                'ignoreCase': 'true'
+                            }
+                        ]
                     }
                 }
             ]
@@ -257,5 +338,8 @@ class Indexer_VSM:
 
 if __name__ == "__main__":
     i = Indexer_VSM()
-    i.do_initial_setup()
-    i.add_fields()
+    # i.do_initial_setup()
+    # i.add_fields()
+    i.replace_vsm()
+
+#http://ec2-52-72-185-101.compute-1.amazonaws.com:8983/solr/#/VSM_Project_4/core-overview
