@@ -22,7 +22,7 @@ def search():
 
     lsi = LSI()
     get_news = news()
-    news_result = get_news.news()
+    news_result = get_news.news(query)
     results = []
     solr = SolrConnection()
     for i in range(5):

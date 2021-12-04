@@ -221,14 +221,14 @@ class LSI:
         return results
 
     def query_execution(self, query):
-        response_json = self.solr_connection.convert_query(query)
-        for tweet in response_json:
+        response_solr = self.solr_connection.convert_query(query)
+        for tweet in response_solr:
             self.add_doc(tweet["tweet_text"], tweet["id"], tweet["tweet_lang"])
         self.rebuild_index()
         response = self.query(query)
         response_json = []
         for i in response:
-            for response in response_json:
+            for response in response_solr:
                 if i == response["id"]:
                     response_json.append(response)
                     break
