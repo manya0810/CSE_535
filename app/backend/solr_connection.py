@@ -3,6 +3,7 @@
 from googletrans import Translator
 import wikipediaapi
 import json
+import requests
 # if you are using python 3, you should
 import urllib.request
 
@@ -11,7 +12,7 @@ import urllib.request
 
 class SolrConnection:
     def convert_query(self, query):
-        query = "tweet_text%3A"+query.replace(" ", "%20")
+        # query = "tweet_text%3A"+query.replace(" ", "%20")
         translator = Translator()
         detect = translator.detect(query)
         if detect.lang == 'en':
@@ -51,9 +52,9 @@ class SolrConnection:
             text_es = text_es.replace(" ", "%20")
             query_final = query_final + "tweet_text%3A(" + text_es + ")"
 
-        solr_query = "http://ec2-52-72-185-101.compute-1.amazonaws.com:8983/solr/BM25_Project_4/select?q.op=OR&q=(" + query_final + ")&rows=50"
-        data = urllib.request.urlopen(solr_query)
-        return json.load(data)['response']['docs']
+        solr_query = "http://ec2-52-72-185-101.compute-1.amazonaws.com:8983/solr/BM25_Project_4/select?q.op=OR&q=" + query_final + "&rows=50"
+        data = requests.get(solr_query).json()
+        return data['response']['docs']
 
     def wiki(self, query):
         wiki = wikipediaapi.Wikipedia()

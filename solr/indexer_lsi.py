@@ -17,6 +17,7 @@ import os
 
 nltk.download('perluniprops')
 nltk.download('nonbreaking_prefixes')
+nltk.download('punkt')
 from nltk.tokenize.toktok import ToktokTokenizer
 
 from app.backend.solr_connection import SolrConnection
