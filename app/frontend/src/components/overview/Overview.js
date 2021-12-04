@@ -1,6 +1,7 @@
 import React from 'react'
 import BarGraphGen from '../../utils/BarGraphs'
-import { countries, languages, poi } from '../../utils/Data'
+import { countries, covidRate, languages, poi, tweetsPerDay, vaccination } from '../../utils/Data'
+import { DateLineChart, TripleLineChart } from '../../utils/LineCharts'
 import PieChartGen from '../../utils/PieChart'
 import Navbar from '../navbar/Navbar'
 import './Overview.css'
@@ -17,16 +18,24 @@ const Overview = () => {
                 <div className='suboverview'>
                     <div>
                         Country wise tweets
-                        <BarGraphGen data={countries}/>
+                        <PieChartGen data={countries}/>
                     </div>
                     <div>
                         Language based tweets
-                        <BarGraphGen data={languages}/>
+                        <PieChartGen data={languages}/>
                     </div>
                 </div>
-                <div>
-                    <h3>Dummy</h3>
-                    <PieChartGen />
+                <div style={{width:'80%'}}>
+                    <h3>Covid cases per day</h3>
+                    <TripleLineChart data={covidRate} />
+                </div>
+                <div style={{width:'80%'}}>
+                    <h3>Vaccination Rate</h3>
+                    <TripleLineChart data={vaccination} />
+                </div>
+                <div style={{width:'80%'}}>
+                    <h3>Tweets per day</h3>
+                    <DateLineChart data={tweetsPerDay} />
                 </div>
             </div>
             
