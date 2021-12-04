@@ -22,12 +22,20 @@ def search():
 
     lsi = LSI()
     get_news = news()
-    news_result = get_news.news(query)
-    results = []
     solr = SolrConnection()
-    for i in range(5):
-        results.append(news_result['articles'][i])
-    wiki_text = solr.wiki(query)
+    try:
+        news_result = get_news.news(query)
+        print(news_result)
+    except:
+        print("No news article found")
+    # for article in news_result['articles']:
+    #     results.append(article)
+    try:
+        wiki_text = solr.wiki(query)
+        print(wiki_text)
+    except:
+        print("Wiki failed")
+
 
 
     yt = youtube()
