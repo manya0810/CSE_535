@@ -4,6 +4,7 @@ from flask_cors import CORS, cross_origin
 from solr.indexer_lsi import LSI
 from solr_connection import SolrConnection
 from news_api import news
+from youtube import youtube
 #import requests
 
 app = flask.Flask(__name__)
@@ -27,6 +28,11 @@ def search():
     for i in range(5):
         results.append(news_result['articles'][i])
     wiki_text = solr.wiki(query)
+
+
+    yt = youtube()
+    video_urls = yt.fetch_videos(query)
+
 
     res = flask.jsonify({'tweets': lsi.query_execution(query)})
     return res
