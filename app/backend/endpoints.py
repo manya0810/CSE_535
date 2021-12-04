@@ -33,7 +33,6 @@ def search():
     yt = youtube()
     video_urls = yt.fetch_videos(query)
 
-
     res = flask.jsonify({'tweets': lsi.query_execution(query)})
     return res
 
