@@ -55,8 +55,14 @@
 
 .result {
   display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .analysis {
   min-width: 30%;
+}
+
+.extras {
+  display: flex;
 }

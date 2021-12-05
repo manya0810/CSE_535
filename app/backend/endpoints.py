@@ -23,25 +23,39 @@ def search():
     lsi = LSI()
     get_news = news()
     solr = SolrConnection()
+    news_articles=[]
     try:
         news_result = get_news.news(query)
         print(news_result)
+        news_articles=news_result['articles'][:5]
     except:
         print("No news article found")
     # for article in news_result['articles']:
     #     results.append(article)
+
+    wiki_text=""
     try:
         wiki_text = solr.wiki(query)
         print(wiki_text)
     except:
         print("Wiki failed")
 
-
-
     yt = youtube()
-    video_urls = yt.fetch_videos(query)
+    video_urls = ""
+    try:
+        video_urls = yt.fetch_videos(query)
+        print(video_urls)
+    except:
+        print("youtube failed")
 
-    res = flask.jsonify({'tweets': lsi.query_execution(query)})
+    tweets = lsi.query_execution(query)
+
+    res = flask.jsonify({
+        'tweets': tweets,
+        'news': news_articles,
+        'wiki': wiki_text,
+        'videos': video_urls
+    })
     return res
 
 
