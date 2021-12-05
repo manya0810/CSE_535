@@ -3,7 +3,7 @@ import { PieChart, Pie, Tooltip, Cell } from 'recharts';
 
 const customLabel = entry => `${entry.name} - ${entry.value}`
 
-const colors=['red','green','blue']
+const colors=['#BA1717','#00744E','#002874']
 
 const PieChartGen = ({ data }) => {
     return (
