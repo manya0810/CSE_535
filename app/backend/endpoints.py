@@ -1,7 +1,7 @@
 import flask
 from flask import request, abort
 from flask_cors import CORS, cross_origin
-from CSE_535.solr.indexer_lsi import LSI
+from solr.indexer_lsi import LSI
 from solr_connection import SolrConnection
 from news_api import news
 from youtube import youtube
