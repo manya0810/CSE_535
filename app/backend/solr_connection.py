@@ -58,6 +58,7 @@ class SolrConnection:
 
     def wiki(self, query):
         wiki = wikipediaapi.Wikipedia()
+        query = query.replace(" ","_")
         page_py = wiki.page(query)
         if page_py.exists():
 

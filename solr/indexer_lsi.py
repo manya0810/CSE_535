@@ -20,7 +20,7 @@ nltk.download('nonbreaking_prefixes')
 nltk.download('punkt')
 from nltk.tokenize.toktok import ToktokTokenizer
 
-from app.backend.solr_connection import SolrConnection
+from CSE_535.app.backend.solr_connection import SolrConnection
 
 
 class LSI:
