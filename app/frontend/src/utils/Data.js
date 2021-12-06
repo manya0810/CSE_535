@@ -223,3 +223,47 @@ export const spanishTopicsMulti = [{'name': 'topic-1', 'children': [{'name': 'do
 export const hindiTopicsMulti = [{'name': 'topic-1', 'children': [{'name': 'टीकाकरण', 'value': 986}, {'name': 'टीके', 'value': 572}, {'name': 'अधिक', 'value': 511}, {'name': 'अभियान', 'value': 422}, {'name': 'विश्व', 'value': 372}, {'name': 'करोड़', 'value': 307}, {'name': 'कोरोना', 'value': 282}, {'name': 'लगाए', 'value': 255}, {'name': 'चल', 'value': 241}]}, {'name': 'topic-2', 'children': [{'name': 'भारत', 'value': 824}, {'name': 'मोदी', 'value': 727}, {'name': 'प्रधानमंत्री', 'value': 650}, {'name': 'दिन', 'value': 560}, {'name': 'करोड़', 'value': 552}, {'name': 'सरकार', 'value': 204}, {'name': 'रिकॉर्ड', 'value': 202}, {'name': 'लगाने', 'value': 172}, {'name': 'हमें', 'value': 142}]}, {'name': 'topic-3', 'children': [{'name': 'वैक्सीन', 'value': 469}, {'name': 'कोविड', 'value': 385}, {'name': 'वैक्सीनेशन', 'value': 340}, {'name': 'डोज', 'value': 256}, {'name': 'लोगों', 'value': 203}, {'name': 'टीका', 'value': 177}, {'name': 'कोरोना', 'value': 168}, {'name': 'देने', 'value': 104}]}, {'name': 'topic-4', 'children': [{'name': 'देश', 'value': 617}, {'name': 'जन्मदिन', 'value': 237}, {'name': 'काम', 'value': 135}, {'name': 'नए', 'value': 106}, {'name': 'कीर्तिमान', 'value': 101}, {'name': 'करोड़', 'value': 99}, {'name': 'पीएम', 'value': 96}]}, {'name': 'topic-5', 'children': [{'name': 'सरकार', 'value': 124}, {'name': 'कोरोना', 'value': 107}, {'name': 'टीका', 'value': 61}, {'name': 'सुरक्षा', 'value': 47}, {'name': 'हमारी', 'value': 46}, {'name': 'रूप', 'value': 40}, {'name': 'दे', 'value': 40}]}, {'name': 'topic-6', 'children': [{'name': 'भाजपा', 'value': 133}, {'name': 'स्वास्थ्य', 'value': 104}, {'name': 'किसान', 'value': 102}, {'name': 'खुराक', 'value': 88}, {'name': 'बार', 'value': 86}, {'name': 'परिवार', 'value': 82}, {'name': 'सेंटर', 'value': 75}]}, {'name': 'topic-7', 'children': [{'name': 'दिल्ली', 'value': 93}, {'name': 'प्रदेश', 'value': 70}, {'name': 'विकास', 'value': 45}, {'name': 'नई', 'value': 38}, {'name': 'सेवा', 'value': 37}]}, {'name': 'topic-8', 'children': [{'name': 'जनता', 'value': 37}, {'name': 'जीवन', 'value': 26}, {'name': 'हमारे', 'value': 24}, {'name': 'भारतीय', 'value': 21}]}, {'name': 'topic-9', 'children': [{'name': '', 'value': 40}, {'name': 'किसानों', 'value': 36}, {'name': 'मुझे', 'value': 20}, {'name': 'दूसरी', 'value': 18}]}, {'name': 'topic-10', 'children': [{'name': 'नरेन्द्र', 'value': 12}, {'name': 'देशवासियों', 'value': 6}]}];
 // export const englishTopicsMulti = [{'name': 'topic-1', 'children': [{'name': 'time', 'value': 507}, {'name': 'vaccination', 'value': 250}, {'name': 'american', 'value': 204}, {'name': 'amp', 'value': 190}, {'name': 'dose', 'value': 188}, {'name': 'case', 'value': 169}, {'name': 'plan', 'value': 168}, {'name': 'week', 'value': 154}]}, {'name': 'topic-2', 'children': [{'name': 'people', 'value': 437}, {'name': 'vote', 'value': 150}]}, {'name': 'topic-3', 'children': [{'name': 'good', 'value': 451}, {'name': 'vaccine', 'value': 303}, {'name': 'today', 'value': 241}]}, {'name': 'topic-4', 'children': [{'name': 'live', 'value': 208}, {'name': 'bad', 'value': 195}, {'name': 'big', 'value': 158}, {'name': 'talk', 'value': 147}, {'name': 'leader', 'value': 143}, {'name': 'high', 'value': 132}]}, {'name': 'topic-5', 'children': [{'name': 'feel', 'value': 189}, {'name': 'democracy', 'value': 154}, {'name': 'make', 'value': 136}, {'name': 'team', 'value': 134}, {'name': 'think', 'value': 121}, {'name': 'job', 'value': 112}, {'name': 'strong', 'value': 108}]}, {'name': 'topic-6', 'children': [{'name': 'year', 'value': 306}, {'name': 'start', 'value': 156}, {'name': 'call', 'value': 146}, {'name': 'health', 'value': 146}, {'name': 'watch', 'value': 144}, {'name': 'nation', 'value': 130}, {'name': 'lot', 'value': 115}, {'name': 'history', 'value': 108}, {'name': 'usp', 'value': 103}, {'name': 'rest', 'value': 99}]}, {'name': 'topic-7', 'children': [{'name': 'issue', 'value': 337}, {'name': 'hope', 'value': 248}, {'name': 'wait', 'value': 244}, {'name': 'problem', 'value': 194}, {'name': 'stand', 'value': 156}, {'name': 'business', 'value': 138}, {'name': 'increase', 'value': 108}, {'name': 'base', 'value': 106}, {'name': 'order', 'value': 105}]}, {'name': 'topic-8', 'children': [{'name': 'work', 'value': 270}, {'name': 'critical', 'value': 80}]}, {'name': 'topic-9', 'children': [{'name': 'day', 'value': 312}, {'name': 'vaccinate', 'value': 136}, {'name': 'hold', 'value': 51}, {'name': 'lie', 'value': 50}, {'name': 'close', 'value': 48}, {'name': 'legislator', 'value': 43}]}, {'name': 'topic-10', 'children': [{'name': 'public', 'value': 58}, {'name': 'pandemic', 'value': 49}, {'name': 'child', 'value': 36}, {'name': 'hear', 'value': 31}, {'name': 'wear', 'value': 25}, {'name': 'mask', 'value': 24}, {'name': 'number', 'value': 24}]}];
 export const englishTopicsMulti = [{'name': 'topic-1', 'children': [{'name': 'time', 'value': 432}, {'name': 'vaccination', 'value': 213}, {'name': 'american', 'value': 174}, {'name': 'amp', 'value': 162}, {'name': 'dose', 'value': 160}, {'name': 'case', 'value': 145}, {'name': 'plan', 'value': 143}, {'name': 'week', 'value': 132}]}, {'name': 'topic-2', 'children': [{'name': 'people', 'value': 334}, {'name': 'vote', 'value': 115}, {'name': 'love', 'value': 106}, {'name': 'family', 'value': 68}, {'name': 'deadly', 'value': 68}, {'name': 'game', 'value': 62}, {'name': 'have', 'value': 62}, {'name': 'play', 'value': 62}]}, {'name': 'topic-3', 'children': [{'name': 'good', 'value': 302}, {'name': 'vaccine', 'value': 203}, {'name': 'today', 'value': 162}, {'name': 'fight', 'value': 83}, {'name': 'great', 'value': 81}, {'name': 'join', 'value': 76}, {'name': 'will', 'value': 69}]}, {'name': 'topic-4', 'children': [{'name': 'live', 'value': 101}, {'name': 'bad', 'value': 95}, {'name': 'big', 'value': 77}, {'name': 'talk', 'value': 71}, {'name': 'leader', 'value': 69}, {'name': 'high', 'value': 64}]}, {'name': 'topic-5', 'children': [{'name': 'feel', 'value': 83}, {'name': 'democracy', 'value': 68}, {'name': 'make', 'value': 60}, {'name': 'team', 'value': 59}, {'name': 'think', 'value': 53}, {'name': 'job', 'value': 49}]}, {'name': 'topic-6', 'children': [{'name': 'year', 'value': 126}, {'name': 'start', 'value': 65}, {'name': 'call', 'value': 61}, {'name': 'health', 'value': 61}, {'name': 'watch', 'value': 60}]}, {'name': 'topic-7', 'children': [{'name': 'issue', 'value': 128}, {'name': 'hope', 'value': 94}, {'name': 'wait', 'value': 93}, {'name': 'problem', 'value': 74}, {'name': 'stand', 'value': 60}]}, {'name': 'topic-8', 'children': [{'name': 'work', 'value': 75}, {'name': 'critical', 'value': 22}, {'name': 'learn', 'value': 20}, {'name': 'morning', 'value': 16}]}, {'name': 'topic-9', 'children': [{'name': 'day', 'value': 45}, {'name': 'vaccinate', 'value': 20}, {'name': 'hold', 'value': 8}]}, {'name': 'topic-10', 'children': [{'name': 'public', 'value': 6}, {'name': 'pandemic', 'value': 5}]}];
+
+export const poiCovidUS = [
+    {'name': 'CDCgov', 'non-covid': 95, 'covid': 3154},
+    {'name': 'JoeBiden', 'non-covid': 511, 'covid': 2291},
+    {'name': 'GavinNewsom', 'non-covid': 801, 'covid': 1999},
+    {'name': 'KamalaHarris', 'non-covid': 458, 'covid': 2006},
+    {'name': 'DonaldJTrumpJr', 'non-covid': 301, 'covid': 1199},
+    {'name': 'GOPChairwoman', 'non-covid': 245, 'covid': 1255},
+    {'name': 'HillaryClinton', 'non-covid': 214, 'covid': 792},
+    {'name': 'tedcruz', 'non-covid': 169, 'covid': 763},
+    {'name': 'CAgovernor', 'non-covid': 37, 'covid': 663},
+    {'name': 'GovAbbott', 'non-covid': 64, 'covid': 636},
+    {'name': 'POTUS', 'non-covid': 84, 'covid': 617},
+    {'name': 'GovKathyHochul', 'non-covid': 116, 'covid': 584}
+]
+
+export const poiCovidInd = [
+    {'name': 'ArvindKejriwal', 'non-covid': 660, 'covid': 2556},
+    {'name': 'MoHFW_INDIA', 'non-covid': 210, 'covid': 2981},
+    {'name': 'PiyushGoyal', 'non-covid': 109, 'covid': 1391},
+    {'name': 'rajnathsingh', 'non-covid': 65, 'covid': 1435},
+    {'name': 'RahulGandhi', 'non-covid': 793, 'covid': 2342},
+    {'name': 'PMOIndia', 'non-covid': 753, 'covid': 2376},
+    {'name': 'ShashiTharoor', 'non-covid': 786, 'covid': 2014},
+    {'name': 'VinodChavdaBJP', 'non-covid': 1307, 'covid': 1490},
+    {'name': 'narendramodi', 'non-covid': 656, 'covid': 2140},
+    {'name': 'mansukhmandviya', 'non-covid': 814, 'covid': 1981},
+    {'name': 'AmitShah', 'non-covid': 275, 'covid': 2467}
+]
+
+export const poiCovidMex = [
+    {'name': 'SSalud_mx', 'non-covid': 24, 'covid': 3225},
+    {'name': 'lopezobrador_', 'non-covid': 215, 'covid': 3034},
+    {'name': 'yeidckol', 'non-covid': 195, 'covid': 3024},
+    {'name': 'FelipeCalderon', 'non-covid': 171, 'covid': 3005},
+    {'name': 'VicenteFoxQue', 'non-covid': 566, 'covid': 2606},
+    {'name': 'alfredodelmazo', 'non-covid': 245, 'covid': 2546},
+    {'name': 'ManceraMiguelMX', 'non-covid': 28, 'covid': 1472},
+    {'name': 'lopezdoriga', 'non-covid': 57, 'covid': 1443},
+    {'name': 'JoseNarroR', 'non-covid': 12, 'covid': 888},
+    {'name': 'HLGatell', 'non-covid': 16, 'covid': 2784},
+    {'name': 'Claudiashein', 'non-covid': 174, 'covid': 2626}
+]
+    

@@ -1,7 +1,7 @@
 import React from 'react'
-import BarGraphGen from '../../utils/BarGraphs'
-import { countries, covidRate, englishTopics, englishTopicsMulti, englishTopicsMulti2, hindiTopics, hindiTopicsMulti, languages, poi, spanishTopics, spanishTopicsMulti, tweetsPerDay, vaccination } from '../../utils/Data'
-import { DateLineChart, TripleLineChart } from '../../utils/LineCharts'
+import BarGraphGen, { BarGraphStacked } from '../../utils/BarGraphs'
+import { countries, covidRate, englishTopics, englishTopicsMulti, englishTopicsMulti2, hindiTopics, hindiTopicsMulti, languages, poi, poiCovidInd, poiCovidMex, poiCovidUS, spanishTopics, spanishTopicsMulti, tweetsPerDay, vaccination } from '../../utils/Data'
+import { DateLineChart, SingleLineChart, TripleLineChart } from '../../utils/LineCharts'
 import PieChartGen from '../../utils/PieChart'
 import TreeMapGen, { TreeMapDefault } from '../../utils/TreeMaps'
 import Navbar from '../navbar/Navbar'
@@ -51,6 +51,36 @@ const Overview = () => {
                 <div style={{width:'80%'}}>
                     <h3>Tweets per day</h3>
                     <DateLineChart data={tweetsPerDay} />
+                </div>
+                <div style={{width:'80%', display:'flex'}}>
+                    <div>
+                        <h3>USA</h3>
+                        <BarGraphStacked data={poiCovidUS} />
+                    </div>
+                    <div style={{width:'50%'}}>
+                        <h3>Vaccination Rate</h3>
+                        <SingleLineChart data={vaccination} country='usa' />
+                    </div>
+                </div>
+                <div style={{width:'80%', display:'flex'}}>
+                    <div>
+                        <h3>India</h3>
+                        <BarGraphStacked data={poiCovidInd} />
+                    </div>
+                    <div style={{width:'50%'}}>
+                        <h3>Vaccination Rate</h3>
+                        <SingleLineChart data={vaccination} country='india'/>
+                    </div>
+                </div>
+                <div style={{width:'80%', display:'flex'}}>
+                    <div>
+                        <h3>Mexico</h3>
+                        <BarGraphStacked data={poiCovidMex} />
+                    </div>
+                    <div style={{width:'50%'}}>
+                        <h3>Vaccination Rate</h3>
+                        <SingleLineChart data={vaccination} country='mexico'/>
+                    </div>
                 </div>
             </div>
             

@@ -111,3 +111,41 @@ export const TripleLineChart = ({ data }) => {
         </ResponsiveContainer>
     )
 }
+
+export const SingleLineChart = ({ data, country }) => {
+    let formattedData=[]
+    data.forEach(d => {
+        let x = (new Date(d.name)).toLocaleDateString("en-US", options)
+        // let y = (new Date(x)).getTime()
+        // d.name=y
+        d.name=x
+    });
+    for (var i=13;i<data.length;i++){
+        formattedData.push(data[i])
+    }
+    return (
+        <ResponsiveContainer width='100%' height={300}>
+            <LineChart
+                data={formattedData}
+                margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5
+                }}
+                >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line
+                    type="monotone"
+                    dataKey={country}
+                    stroke="red"
+                    activeDot={{ r: 8 }}
+                />
+            </LineChart>
+        </ResponsiveContainer>
+    )
+}
