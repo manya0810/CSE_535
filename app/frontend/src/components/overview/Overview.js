@@ -1,6 +1,6 @@
 import React from 'react'
 import BarGraphGen from '../../utils/BarGraphs'
-import { countries, covidRate, englishTopics, hindiTopics, languages, poi, spanishTopics, tweetsPerDay, vaccination } from '../../utils/Data'
+import { countries, covidRate, englishTopics, englishTopicsMulti, englishTopicsMulti2, hindiTopics, hindiTopicsMulti, languages, poi, spanishTopics, spanishTopicsMulti, tweetsPerDay, vaccination } from '../../utils/Data'
 import { DateLineChart, TripleLineChart } from '../../utils/LineCharts'
 import PieChartGen from '../../utils/PieChart'
 import TreeMapGen, { TreeMapDefault } from '../../utils/TreeMaps'
@@ -12,18 +12,18 @@ const Overview = () => {
         <div>
             <Navbar />
             <div className='overview'>
-                <div className='topics'>
                     <div>
                         <h3>English Topics</h3>
-                        <TreeMapGen data={englishTopics}/>
+                        <TreeMapGen data={englishTopicsMulti} />
                     </div>
+                <div className='topics'>
                     <div>
                         <h3>Hindi Topics</h3>
-                        <TreeMapDefault data={hindiTopics} color='#002874'/>
+                        <TreeMapGen data={hindiTopicsMulti} />
                     </div>
-                    <div>
+                    <div style={{marginLeft: '32px'}}>
                         <h3>Spanish Topics</h3>
-                        <TreeMapDefault data={spanishTopics} color='#00744E'/>
+                        <TreeMapGen data={spanishTopicsMulti} />
                     </div>
                 </div>
                 <div>
