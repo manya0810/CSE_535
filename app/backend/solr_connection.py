@@ -63,6 +63,7 @@ class SolrConnection:
         if page_py.exists():
 
             text = page_py.summary[0:6000]
-            return text
+            url = page_py.fullurl
+            return text,url
         else:
             return None

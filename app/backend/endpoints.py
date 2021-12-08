@@ -35,7 +35,7 @@ def search():
 
     wiki_text=""
     try:
-        wiki_text = solr.wiki(query)
+        wiki_text,wiki_url = solr.wiki(query)
         print(wiki_text)
     except:
         print("Wiki failed")
