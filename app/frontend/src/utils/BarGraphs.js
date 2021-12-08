@@ -8,6 +8,7 @@ import {
     Tooltip,
     ReferenceLine,
     Cell,
+    Legend,
   } from "recharts";
 
 const BarGraphGen = ({ data }) => {
@@ -65,6 +66,33 @@ export const BarGraphSingle = data => {
                 <ReferenceLine y={0} stroke="#000" />
                 <Bar dataKey="value" fill="#8884d8" />
                 {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
+            </BarChart>
+            
+        </div>
+    )
+}
+
+export const BarGraphStacked = ({data}) => {
+    return (
+        <div>
+            <BarChart
+                width={500}
+                height={300}
+                data={data}
+                margin={{
+                    top: 20,
+                    right: 30,
+                    left: 20,
+                    bottom: 5
+                }}
+                >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="non-covid" stackId="a" fill="#8884d8" />
+                <Bar dataKey="covid" stackId="a" fill="#82ca9d" />
             </BarChart>
             
         </div>
