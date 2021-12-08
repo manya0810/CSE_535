@@ -56,6 +56,7 @@ def search():
         'tweets': tweets,
         'news': news_articles,
         'wiki': wiki_text,
+        'wiki_url' : wiki_url,
         'videos': video_urls
     })
     return res
