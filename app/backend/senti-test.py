@@ -8,9 +8,9 @@ a = 'This was a good movie.'
 print(sid.polarity_scores(a))
 temp = sid.polarity_scores(a)
 sentiment = ""
-if temp['compound'] > 0.7:
+if temp['pos'] > temp['neu'] and temp['pos'] > temp['neg']:
     sentiment = "Positive"
-elif temp['compound'] > 0.4 and temp['compound'] < 0.7:
+elif temp['neu'] > temp['pos'] and temp['neu'] > temp['neg']:
     sentiment = "Neutral"
 else:
     sentiment = "Negative"
