@@ -49,8 +49,10 @@ def search():
         print("youtube failed")
 
     tweets = lsi.query_execution(query)
-
+    lsi_poi = LSI()
+    poi_tweets = lsi_poi.query_execution_poi(query)
     res = flask.jsonify({
+        'poi_tweets':poi_tweets,
         'tweets': tweets,
         'news': news_articles,
         'wiki': wiki_text,

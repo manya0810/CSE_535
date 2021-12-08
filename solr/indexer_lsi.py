@@ -235,3 +235,17 @@ class LSI:
                     break
         return response_json
 
+    def query_execution_poi(self, query):
+        response_solr = self.solr_connection.convert_query_for_poi(query)
+        for tweet in response_solr:
+            self.add_doc(tweet["tweet_text"], tweet["id"], tweet["tweet_lang"])
+        self.rebuild_index()
+        response = self.query(query)
+        response_json = []
+        for i in response:
+            for response in response_solr:
+                if i == response["id"]:
+                    response_json.append(response)
+                    break
+        return response_json
+
