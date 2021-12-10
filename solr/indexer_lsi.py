@@ -223,7 +223,15 @@ class LSI:
 
     def query_execution(self, query):
         response_solr = self.solr_connection.convert_query(query)
+        gen_country = {'USA': 0, 'INDIA': 0, 'MEXICO': 0}
         for tweet in response_solr:
+            if "country" in tweet:
+                if tweet["country"] == "USA":
+                    gen_country['USA'] += 1
+                if tweet["country"] == "INDIA" or tweet["country"] == "India":
+                    gen_country['INDIA'] += 1
+                if tweet["country"] == "MEXICO" or tweet["country"] == "Mexico":
+                    gen_country['MEXICO'] += 1
             self.add_doc(tweet["tweet_text"], tweet["id"], tweet["tweet_lang"])
         self.rebuild_index()
         response = self.query(query)
@@ -233,11 +241,19 @@ class LSI:
                 if i == response["id"]:
                     response_json.append(response)
                     break
-        return response_json
+        return response_json, gen_country
 
     def query_execution_poi(self, query):
         response_solr = self.solr_connection.convert_query_for_poi(query)
+        poi_country = {'USA': 0, 'INDIA': 0, 'MEXICO': 0}
         for tweet in response_solr:
+            if "country" in tweet:
+                if tweet["country"] == "USA":
+                    poi_country['USA'] += 1
+                if tweet["country"] == "INDIA" or tweet["country"] == "India":
+                    poi_country['INDIA'] += 1
+                if tweet["country"] == "MEXICO" or tweet["country"] == "Mexico":
+                    poi_country['MEXICO'] += 1
             self.add_doc(tweet["tweet_text"], tweet["id"], tweet["tweet_lang"])
         self.rebuild_index()
         response = self.query(query)
@@ -247,5 +263,5 @@ class LSI:
                 if i == response["id"]:
                     response_json.append(response)
                     break
-        return response_json
+        return response_json, poi_country
 

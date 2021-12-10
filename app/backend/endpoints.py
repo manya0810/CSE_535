@@ -33,9 +33,9 @@ def search():
     # for article in news_result['articles']:
     #     results.append(article)
 
-    wiki_text=""
+    wiki_text = ""
     try:
-        wiki_text,wiki_url = solr.wiki(query)
+        wiki_text, wiki_url = solr.wiki(query)
         print(wiki_text)
     except:
         print("Wiki failed")
@@ -48,16 +48,18 @@ def search():
     except:
         print("youtube failed")
 
-    tweets = lsi.query_execution(query)
+    tweets, gen_country = lsi.query_execution(query)
     lsi_poi = LSI()
-    poi_tweets = lsi_poi.query_execution_poi(query)
+    poi_tweets, poi_country = lsi_poi.query_execution_poi(query)
     res = flask.jsonify({
         'poi_tweets':poi_tweets,
         'tweets': tweets,
         'news': news_articles,
         'wiki': wiki_text,
-        'wiki_url' : wiki_url,
-        'videos': video_urls
+        'wiki_url': wiki_url,
+        'videos': video_urls,
+        'country_wise_poi': poi_country,
+        'country_wise_gen': gen_country,
     })
     return res
 
