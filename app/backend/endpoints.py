@@ -5,6 +5,10 @@ from solr.indexer_lsi import LSI
 from solr_connection import SolrConnection
 from news_api import news
 from youtube import youtube
+from senti import sentiment
+from replies import replies
+s = sentiment()
+r = replies()
 #import requests
 
 app = flask.Flask(__name__)
@@ -50,7 +54,19 @@ def search():
 
     tweets, gen_country = lsi.query_execution(query)
     lsi_poi = LSI()
+
     poi_tweets, poi_country = lsi_poi.query_execution_poi(query)
+    print(poi_tweets)
+    for doc in poi_tweets:
+        try:
+            text = doc['tweet_text']
+            sentiment, sentiment_score = s.analyze(text)
+            doc['sentiment'] = sentiment
+            doc['sentiment_score'] = sentiment_score
+        except:
+            print("key error")
+    poi_tweets = r.fetch_replies(poi_tweets)
+    print(poi_tweets)
     res = flask.jsonify({
         'poi_tweets':poi_tweets,
         'tweets': tweets,
