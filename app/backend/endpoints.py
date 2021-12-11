@@ -5,10 +5,12 @@ from solr.indexer_lsi import LSI
 from solr_connection import SolrConnection
 from news_api import news
 from youtube import youtube
-from senti import sentiment
-from replies import replies
-s = sentiment()
-r = replies()
+# from senti import sentiment
+# from replies import replies
+from tweetcounts import TweetCounts
+
+# s = sentiment()
+# r = replies()
 #import requests
 
 app = flask.Flask(__name__)
@@ -25,9 +27,11 @@ def search():
         abort(400, {'error': 'query parameter is required'})
 
     lsi = LSI()
+    lsi_poi = LSI()
     get_news = news()
+    cnt = TweetCounts()
     solr = SolrConnection()
-    news_articles=[]
+    news_articles = []
     try:
         news_result = get_news.news(query)
         print(news_result)
@@ -38,6 +42,7 @@ def search():
     #     results.append(article)
 
     wiki_text = ""
+    wiki_url = ""
     try:
         wiki_text, wiki_url = solr.wiki(query)
         print(wiki_text)
@@ -52,30 +57,27 @@ def search():
     except:
         print("youtube failed")
 
-    tweets, gen_country = lsi.query_execution(query)
-    lsi_poi = LSI()
+    tweets = lsi.query_execution(query)
+    poi_tweets = lsi_poi.query_execution_poi(query)
 
-    poi_tweets, poi_country = lsi_poi.query_execution_poi(query)
-    print(poi_tweets)
-    for doc in poi_tweets:
-        try:
-            text = doc['tweet_text']
-            sentiment, sentiment_score = s.analyze(text)
-            doc['sentiment'] = sentiment
-            doc['sentiment_score'] = sentiment_score
-        except:
-            print("key error")
-    poi_tweets = r.fetch_replies(poi_tweets)
-    print(poi_tweets)
+    #Counts
+    counts_gen = cnt.get_counts(tweets)
+    counts_poi = cnt.get_counts(poi_tweets)
+    tweets, total_rep_counts_gen = cnt.get_reply_counts(tweets)
+    poi_tweets, total_rep_counts_poi = cnt.get_reply_counts(poi_tweets)
+
+
     res = flask.jsonify({
-        'poi_tweets':poi_tweets,
+        'poi_tweets': poi_tweets,
         'tweets': tweets,
         'news': news_articles,
         'wiki': wiki_text,
         'wiki_url': wiki_url,
         'videos': video_urls,
-        'country_wise_poi': poi_country,
-        'country_wise_gen': gen_country,
+        'gen_counts': counts_gen,
+        'poi_counts': counts_poi,
+        'total_gen_reply_counts': total_rep_counts_gen,
+        'total_poi_reply_counts': total_rep_counts_poi
     })
     return res
 
