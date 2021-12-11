@@ -6,16 +6,28 @@ import './SearchPage.css'
 import LinearProgress from '@mui/material/LinearProgress';
 import Pagination from '@mui/material/Pagination';
 import { Card, CardActionArea, CardContent, Typography } from '@mui/material'
+import Tweet from './Tweet'
+import PieChartGen from '../../utils/PieChart'
 
 const url = 'http://127.0.0.1:5000'
 
+const formatPieData = ({INDIA, MEXICO, USA}) => ([
+    {'name': 'USA', 'value': USA},
+    {'name': 'MEXICO', 'value': MEXICO},
+    {'name': 'INDIA', 'value': INDIA}
+])
+
 const SearchPage = () => {
     const [tweets, setTweets] = useState([])
+    const [poiTweets, setPoiTweets] = useState([])
     const [news, setNews] = useState([])
     const [wiki, setWiki] = useState("")
+    const [wikiUrl, setWikiUrl] = useState("")
     const [videos, setVideos] = useState([])
-    // const [page, setPage] = useState(1)
+    const [countryWiseGen, setCountryWiseGen] = useState([])
+    const [countryWisePoi, setCountryWisePoi] = useState([])
     const [currentItems, setCurrentItems] = useState([])
+    const [currentPoiItems, setCurrentPoiItems] = useState([])
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -35,7 +47,12 @@ const SearchPage = () => {
             setNews(res.data.news)
             setWiki(res.data.wiki)
             setVideos(res.data.videos)
+            setWikiUrl(res.data.wiki_url)
+            setPoiTweets(res.data.poi_tweets)
+            setCountryWiseGen(formatPieData(res.data.country_wise_gen))
+            setCountryWisePoi(formatPieData(res.data.country_wise_poi))
             setCurrentItems(res.data.tweets.slice(0,10))
+            setCurrentPoiItems(res.data.poi_tweets.slice(0,10))
         }
         progressBar.style.display = 'none';
         
@@ -44,6 +61,7 @@ const SearchPage = () => {
     const handlePageChange = v => {
         // setPage(v);
         setCurrentItems(tweets.slice((v-1)*10,v*10))
+        setCurrentPoiItems(poiTweets.slice((v-1)*10,v*10))
         window.scrollTo(0,document.body.scrollHeight);
     }
 
@@ -105,35 +123,38 @@ const SearchPage = () => {
                             </Typography>
                         </CardContent>
                     </Card>
+                    <a href={wikiUrl} target="_blank">Read More</a>
                 </div>
             </div>
             <div className='result'>
                 <div className='tweets'>
-                    <h3>Tweets</h3>
-                    {currentItems.map((tweet,index) => (
-                        <Card sx={{maxHeight: '200px', margin: '2px' }}>
-                            <CardActionArea>
-                                <CardContent>
-                                    <Typography gutterBottom component="div">
-                                        {tweet.poi_name?<div style={{textAlign: 'left'}}><b>@{tweet.poi_name}</b></div>:''}
-                                        <p style={{textAlign: 'left'}}>{tweet.tweet_text}</p>
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
-                        </Card>
-                        // <div className='tweetFields' key={index}>
-                        //     <hr/>
-                        //     {tweet.poi_name?<div><h4>@{tweet.poi_name}</h4></div>:''}
-                        //     <div>{tweet.tweet_text}</div>
-                        // </div>
+                    <h3>POI Tweets</h3>
+                    {currentPoiItems.map((tweet,index) => (
+                        <Tweet tweet={tweet} />
                     ))}
                 </div>
                 <div className="vl"></div>
-                <div className='analysis'>
-                    {tweets.length>0?<h3>Analysis</h3>:''}
+                <div className='tweets'>
+                    <h3>General Tweets</h3>
+                    {currentItems.map((tweet,index) => (
+                        <Tweet tweet={tweet} />
+                    ))}
                 </div>
             </div>
             <Pagination count={5} onChange={(e,v)=>handlePageChange(v)}/>
+            </div>
+            <div className='analysis'>
+                    {tweets.length>0?<h3>Analysis</h3>:''}
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <div>
+                            <h3>Country wise POI tweets</h3>
+                            <PieChartGen data={countryWisePoi} />
+                        </div>
+                        <div>
+                            <h3>Country wise general tweets</h3>
+                            <PieChartGen data={countryWiseGen} />
+                        </div>
+                    </div>
             </div>
         </div>
     )

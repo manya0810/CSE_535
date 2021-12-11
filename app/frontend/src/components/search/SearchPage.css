@@ -40,6 +40,7 @@
 .tweets {
   display: flex;
   flex-direction: column;
+  width: 50%;
 }
 
 .tweetFields {
@@ -57,10 +58,6 @@
   display: flex;
   margin-top: 10px;
   margin-bottom: 10px;
-}
-
-.analysis {
-  min-width: 30%;
 }
 
 .extras {
