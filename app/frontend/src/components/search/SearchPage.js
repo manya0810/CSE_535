@@ -49,8 +49,8 @@ const SearchPage = () => {
             setVideos(res.data.videos)
             setWikiUrl(res.data.wiki_url)
             setPoiTweets(res.data.poi_tweets)
-            setCountryWiseGen(formatPieData(res.data.country_wise_gen))
-            setCountryWisePoi(formatPieData(res.data.country_wise_poi))
+            setCountryWiseGen(formatPieData(res.data.gen_counts.country))
+            setCountryWisePoi(formatPieData(res.data.poi_counts.country))
             setCurrentItems(res.data.tweets.slice(0,10))
             setCurrentPoiItems(res.data.poi_tweets.slice(0,10))
         }
