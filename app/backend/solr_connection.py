@@ -51,7 +51,7 @@ class SolrConnection:
             text_es = text_es.replace(" ", "%20")
             query_final = query_final + "tweet_text%3A(" + text_es + ")"
 
-        solr_query = "http://ec2-52-72-185-101.compute-1.amazonaws.com:8983/solr/BM25_Project_4/select?q.op=OR&q=" + query_final + "&rows=50"
+        solr_query = "http://ec2-52-72-185-101.compute-1.amazonaws.com:8983/solr/BM25_Sentiment_Analysis_V1/select?q.op=OR&q=" + query_final + "&rows=50"
         data = requests.get(solr_query).json()
         return data['response']['docs']
 
@@ -95,7 +95,7 @@ class SolrConnection:
             text_es = text_es.replace(" ", "%20")
             query_final = query_final + "tweet_text%3A(" + text_es + ")"
         query_final = query_final + "AND poi_name: [* TO *]"
-        solr_query = "http://ec2-52-72-185-101.compute-1.amazonaws.com:8983/solr/BM25_Project_4/select?q.op=OR&q=" + query_final + "&rows=50"
+        solr_query = "http://ec2-52-72-185-101.compute-1.amazonaws.com:8983/solr/BM25_Sentiment_Analysis_V1/select?q.op=OR&q=" + query_final + "&rows=50"
         data = requests.get(solr_query).json()
         return data['response']['docs']
 
