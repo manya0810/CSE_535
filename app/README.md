@@ -20,7 +20,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Backend
 
-Use pip or conda to install `flask`, `flask-cors`, `newsapi-python`, `wikipedia-api`, `googletrans` and `detectlanguage`
+Use pip or conda to install `flask`, `flask-cors`, `newsapi-python`, `wikipedia-api`, `googletrans==3.1.0a0` and `detectlanguage`
 
 CD to ./backend then run:
 
