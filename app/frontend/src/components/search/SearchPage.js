@@ -5,10 +5,10 @@ import Navbar from '../navbar/Navbar'
 import './SearchPage.css'
 import LinearProgress from '@mui/material/LinearProgress';
 import Pagination from '@mui/material/Pagination';
-import { Card, CardActionArea, CardContent, Typography } from '@mui/material'
+import { Card, CardContent, Typography } from '@mui/material'
 import Tweet from './Tweet'
-import PieChartGen from '../../utils/PieChart'
 import { poi } from '../../utils/Data'
+import { BarGraphSingle } from '../../utils/BarGraphs'
 
 const url = 'http://127.0.0.1:5000'
 
@@ -22,6 +22,12 @@ const formatPieData = ({INDIA, MEXICO, USA}) => ([
     {'name': 'USA', 'value': USA},
     {'name': 'MEXICO', 'value': MEXICO},
     {'name': 'INDIA', 'value': INDIA}
+])
+
+const formatPieDataSentiment = ({Negative, Neutral, Positive}) => ([
+    {'name': 'Negative', 'value': Negative},
+    {'name': 'Postive', 'value': Positive},
+    {'name': 'Neutral', 'value': Neutral}
 ])
 
 const formatReplies = uTweets => {
@@ -58,6 +64,8 @@ const SearchPage = () => {
     const [videos, setVideos] = useState([])
     const [countryWiseGen, setCountryWiseGen] = useState([])
     const [countryWisePoi, setCountryWisePoi] = useState([])
+    const [sentimentGen, setSentimentGen] = useState([])
+    const [sentimentPoi, setSentimentPoi] = useState([])
     const [currentItems, setCurrentItems] = useState([])
     const [currentPoiItems, setCurrentPoiItems] = useState([])
     const [filteredTweets, setFilteredTweets] = useState([])
@@ -73,11 +81,21 @@ const SearchPage = () => {
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <div>
                     <h3>Country wise POI tweets</h3>
-                    <PieChartGen data={countryWisePoi} />
+                    <BarGraphSingle data={countryWisePoi} />
                 </div>
                 <div>
-                    <h3>Country wise general tweets</h3>
-                    <PieChartGen data={countryWiseGen} />
+                    <h3>Country wise Non-POI tweets</h3>
+                    <BarGraphSingle data={countryWiseGen} />
+                </div>
+            </div>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <div>
+                    <h3>POI tweets sentiment </h3>
+                    <BarGraphSingle data={sentimentPoi} />
+                </div>
+                <div>
+                    <h3>Non-POI tweets sentiment</h3>
+                    <BarGraphSingle data={sentimentGen} />
                 </div>
             </div>
         </div>
@@ -136,6 +154,8 @@ const SearchPage = () => {
             setPoiTweets(formattedPoiTweets)
             setCountryWiseGen(formatPieData(res.data.gen_counts.country))
             setCountryWisePoi(formatPieData(res.data.poi_counts.country))
+            setSentimentGen(formatPieDataSentiment(res.data.gen_counts.sentiment))
+            setSentimentPoi(formatPieDataSentiment(res.data.poi_counts.sentiment))
             setCurrentItems(formattedTweets.slice(0,10))
             setCurrentPoiItems(formattedPoiTweets.slice(0,10))
             setFilteredPoiTweets(formattedPoiTweets)

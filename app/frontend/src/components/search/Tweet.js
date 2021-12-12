@@ -1,17 +1,23 @@
 import React, {useState} from 'react'
-import { Box, Button, Card, CardActionArea, CardActions, CardContent, Paper, Typography } from '@mui/material'
+import { Box, Button, Card, CardActions, CardContent, Paper, Tooltip, Typography } from '@mui/material'
 import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 
-const getSentimentIcon = sentiment => {
+const getSentimentIcon = (sentiment, score) => {
     if (sentiment){
         if (sentiment == 'Neutral'){
-            return <SentimentNeutralIcon color="primary"/>
+            return (<Tooltip title={`${sentiment} : ${score}`}>
+                <SentimentNeutralIcon color="primary"/>
+                </Tooltip>) 
         } else if (sentiment == 'Positive'){
-            return <SentimentSatisfiedAltIcon color="success"/>
+            return (<Tooltip title={`${sentiment} : ${score}`}>
+                    <SentimentSatisfiedAltIcon color="success"/>
+                </Tooltip>) 
         }  else if (sentiment == 'Negative'){
-            return <SentimentVeryDissatisfiedIcon sx={{ color: 'red' }}/>
+            return (<Tooltip title={`${sentiment} : ${score}`}>
+                    <SentimentVeryDissatisfiedIcon sx={{ color: 'red' }}/>
+                </Tooltip>) 
         }
     }
 }
@@ -36,7 +42,7 @@ const Tweet = ({ tweet }) => {
                         {tweet.country?`${tweet.country} | `:``} {tweet.tweet_date?`${dateFormatter(tweet.tweet_date)} | `:``}
                     </Typography>
                     <Typography sx={{width:'20px'}} >
-                        {getSentimentIcon(tweet.sentiment)}
+                        {getSentimentIcon(tweet.sentiment, tweet.sentiment_score)}
                     </Typography>
                 </Box>
                 <CardActions>

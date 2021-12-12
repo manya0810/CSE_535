@@ -1,6 +1,6 @@
 import React from 'react'
 import BarGraphGen, { BarGraphStacked } from '../../utils/BarGraphs'
-import { countries, covidRate, englishTopics, englishTopicsMulti, englishTopicsMulti2, hindiTopics, hindiTopicsMulti, languages, poi, poiCovidInd, poiCovidMex, poiCovidUS, spanishTopics, spanishTopicsMulti, tweetsPerDay, vaccination } from '../../utils/Data'
+import { countries, covidRate, englishTopics, englishTopicsMulti, englishTopicsMulti2, hindiTopics, hindiTopicsMulti, languages, poi, poiCovidInd, poiCovidMex, poiCovidUS, sentimentAll, spanishTopics, spanishTopicsMulti, tweetsPerDay, vaccination } from '../../utils/Data'
 import { DateLineChart, SingleLineChart, TripleLineChart } from '../../utils/LineCharts'
 import PieChartGen from '../../utils/PieChart'
 import TreeMapGen, { TreeMapDefault } from '../../utils/TreeMaps'
@@ -12,20 +12,6 @@ const Overview = () => {
         <div>
             <Navbar />
             <div className='overview'>
-                    <div>
-                        <h3>English Topics</h3>
-                        <TreeMapGen data={englishTopicsMulti} />
-                    </div>
-                <div className='topics'>
-                    <div>
-                        <h3>Hindi Topics</h3>
-                        <TreeMapGen data={hindiTopicsMulti} />
-                    </div>
-                    <div style={{marginLeft: '32px'}}>
-                        <h3>Spanish Topics</h3>
-                        <TreeMapGen data={spanishTopicsMulti} />
-                    </div>
-                </div>
                 <div>
                     <h3>POI vs No. of tweets</h3>
                     <BarGraphGen data={poi}/>
@@ -80,6 +66,24 @@ const Overview = () => {
                     <div style={{width:'50%'}}>
                         <h3>Vaccination Rate</h3>
                         <SingleLineChart data={vaccination} country='mexico'/>
+                    </div>
+                </div>
+                <div>
+                    <h3>Sentiment of all tweets</h3>
+                    <PieChartGen data={sentimentAll} />
+                </div>
+                <div>
+                    <h3>English Topics</h3>
+                    <TreeMapGen data={englishTopicsMulti} />
+                </div>
+                <div className='topics'>
+                    <div>
+                        <h3>Hindi Topics</h3>
+                        <TreeMapGen data={hindiTopicsMulti} />
+                    </div>
+                    <div style={{marginLeft: '32px'}}>
+                        <h3>Spanish Topics</h3>
+                        <TreeMapGen data={spanishTopicsMulti} />
                     </div>
                 </div>
             </div>

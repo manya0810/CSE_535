@@ -266,4 +266,10 @@ export const poiCovidMex = [
     {'name': 'HLGatell', 'non-covid': 16, 'covid': 2784},
     {'name': 'Claudiashein', 'non-covid': 174, 'covid': 2626}
 ]
+
+export const sentimentAll = [
+    {'name': 'Negative', 'value': parseInt(10*452323/100)},
+    {'name': 'Postive', 'value': parseInt(18*452323/100)},
+    {'name': 'Neutral', 'value': parseInt(72*452323/100)}
+]
     

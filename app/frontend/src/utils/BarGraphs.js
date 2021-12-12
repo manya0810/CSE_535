@@ -11,6 +11,8 @@ import {
     Legend,
   } from "recharts";
 
+const colors=['#BA1717','#00744E','#002874']
+
 const BarGraphGen = ({ data }) => {
     let f=false;
     if(data.length>25){
@@ -45,7 +47,7 @@ const BarGraphGen = ({ data }) => {
     )
 }
 
-export const BarGraphSingle = data => {
+export const BarGraphSingle = ({ data })=> {
     return (
         <div>
             <BarChart
@@ -64,7 +66,12 @@ export const BarGraphSingle = data => {
                 <YAxis />
                 <Tooltip />
                 <ReferenceLine y={0} stroke="#000" />
-                <Bar dataKey="value" fill="#8884d8" />
+                <Bar dataKey="value" fill="#8884d8" >
+                    {data.map((entry, index) => (
+                    // <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell key={`cell-${index}`} fill={colors[index]} />
+                    ))}
+                </Bar>
                 {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
             </BarChart>
             

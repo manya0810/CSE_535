@@ -8,7 +8,7 @@ const colors=['#BA1717','#00744E','#002874']
 const PieChartGen = ({ data }) => {
     return (
         <div>
-            <PieChart width={400} height={400}>
+            <PieChart width={500} height={400}>
                 <Pie
                     dataKey="value"
                     data={data}
