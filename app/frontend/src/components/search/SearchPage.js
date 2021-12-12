@@ -55,6 +55,50 @@ const SearchPage = () => {
     const [currentItems, setCurrentItems] = useState([])
     const [currentPoiItems, setCurrentPoiItems] = useState([])
 
+    const Analysis = () =>(
+        <div className='analysis'>
+            <h3>Analysis</h3>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <div>
+                    <h3>Country wise POI tweets</h3>
+                    <PieChartGen data={countryWisePoi} />
+                </div>
+                <div>
+                    <h3>Country wise general tweets</h3>
+                    <PieChartGen data={countryWiseGen} />
+                </div>
+            </div>
+        </div>
+    )
+    
+    const NewsComp = () => (
+        <div style={{width:'30vw',height:'250px'}}>
+            <h4>News</h4>
+            <CarouselGen items={news}/>
+        </div>
+    );
+
+    const VideoComp = () => (
+        <div style={{width:'30vw',height:'250px'}}>
+            <h4>Videos</h4>
+            <VideoCarousel items={videos}/>
+        </div>
+    );
+
+    const WikiComp = () => (
+        <div style={{width:'40vw',height:'250px'}}>
+            <h4>Wikipedia</h4>
+            <Card sx={{margin: '8px', maxHeight: '250px' }}>
+                <CardContent>
+                    <Typography gutterBottom component="div">
+                        {wiki}
+                    </Typography>
+                </CardContent>
+            </Card>
+            <a href={wikiUrl} target="_blank">Read More</a>
+        </div>
+    );
+
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         let progressBar = document.getElementById('progressBar');
@@ -134,25 +178,7 @@ const SearchPage = () => {
             </div>
             <div id='searchResults' style={{display:'none'}}>
             <div className='extras' style={{height:'350px'}}>
-                <div style={{width:'30vw',height:'250px'}}>
-                    <h4>News</h4>
-                    <CarouselGen items={news}/>
-                </div>
-                <div style={{width:'30vw',height:'250px'}}>
-                    <h4>Videos</h4>
-                    <VideoCarousel items={videos}/>
-                </div>
-                <div style={{width:'40vw',height:'250px'}}>
-                    <h4>Wikipedia</h4>
-                    <Card sx={{margin: '8px', maxHeight: '250px' }}>
-                        <CardContent>
-                            <Typography gutterBottom component="div">
-                                {wiki}
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                    <a href={wikiUrl} target="_blank">Read More</a>
-                </div>
+                {news.length>0?<NewsComp/>:''}{videos.length>0?<VideoComp/>:''}{wiki?<WikiComp/>:''}
             </div>
             <div className='result'>
                 <div className='tweets'>
@@ -163,7 +189,7 @@ const SearchPage = () => {
                 </div>
                 <div className="vl"></div>
                 <div className='tweets'>
-                    <h3>General Tweets</h3>
+                    <h3>Non-POI Tweets</h3>
                     {currentItems.map((tweet,index) => (
                         <Tweet tweet={tweet} />
                     ))}
@@ -171,19 +197,8 @@ const SearchPage = () => {
             </div>
             <Pagination count={5} onChange={(e,v)=>handlePageChange(v)}/>
             </div>
-            <div className='analysis'>
-                    {tweets.length>0?<h3>Analysis</h3>:''}
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-                        <div>
-                            <h3>Country wise POI tweets</h3>
-                            <PieChartGen data={countryWisePoi} />
-                        </div>
-                        <div>
-                            <h3>Country wise general tweets</h3>
-                            <PieChartGen data={countryWiseGen} />
-                        </div>
-                    </div>
-            </div>
+            {tweets.length>0?<Analysis/>:''}
+                
         </div>
     )
 }

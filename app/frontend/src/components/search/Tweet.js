@@ -32,7 +32,7 @@ const Tweet = ({ tweet }) => {
                     <p style={{textAlign: 'left'}}>{tweet.tweet_text}</p>
                 </Typography>
                 <Box sx={{ display: 'inline-flex',  flexDirection: 'row' }}>
-                    <Typography sx={{width:'100px'}} variant="body2" color="text.secondary">
+                    <Typography sx={{width:'125px'}} variant="body2" color="text.secondary">
                         {tweet.country?`${tweet.country} | `:``} {tweet.tweet_date?`${dateFormatter(tweet.tweet_date)} | `:``}
                     </Typography>
                     <Typography sx={{width:'20px'}} >
