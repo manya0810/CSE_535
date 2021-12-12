@@ -17,6 +17,32 @@ const formatPieData = ({INDIA, MEXICO, USA}) => ([
     {'name': 'INDIA', 'value': INDIA}
 ])
 
+const formatReplies = uTweets => {
+    let formattedTweets = []
+    uTweets.forEach(t=>{
+        if (t.replies){
+            let i=0
+            let temp=t
+            let tR=[]
+            while(i<t.replies.length){
+                let r={}
+                r['tweet_lang']=t.replies[i++]
+                r['tweet_text']=t.replies[i++]
+                r['tweet_date']=t.replies[i++]
+                r['sentiment']=t.replies[i++]
+                r['sentiment_score']=t.replies[i++]
+                tR.push(r)
+            }
+            temp.replies=tR
+            formattedTweets.push(temp)
+        } else {
+            formattedTweets.push(t)
+        }
+    })
+    console.log(formattedTweets)
+    return formattedTweets
+}
+
 const SearchPage = () => {
     const [tweets, setTweets] = useState([])
     const [poiTweets, setPoiTweets] = useState([])
@@ -43,16 +69,18 @@ const SearchPage = () => {
         const res = await axios.get(encodedUrl);
         document.getElementById('searchResults').style.display = 'block';
         if (res.data){
-            setTweets(res.data.tweets)
+            var formattedTweets = formatReplies(res.data.tweets)
+            var formattedPoiTweets = formatReplies(res.data.poi_tweets)
+            setTweets(formattedTweets)
             setNews(res.data.news)
             setWiki(res.data.wiki)
             setVideos(res.data.videos)
             setWikiUrl(res.data.wiki_url)
-            setPoiTweets(res.data.poi_tweets)
+            setPoiTweets(formattedPoiTweets)
             setCountryWiseGen(formatPieData(res.data.gen_counts.country))
             setCountryWisePoi(formatPieData(res.data.poi_counts.country))
-            setCurrentItems(res.data.tweets.slice(0,10))
-            setCurrentPoiItems(res.data.poi_tweets.slice(0,10))
+            setCurrentItems(formattedTweets.slice(0,10))
+            setCurrentPoiItems(formattedPoiTweets.slice(0,10))
         }
         progressBar.style.display = 'none';
         
