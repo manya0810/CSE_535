@@ -16,7 +16,6 @@ const COLORS = [
 
 const CustomizedContent = (props) => {
     const { root, depth, x, y, width, height, index, name, value, colors } = props;
-    console.log(index)
     return (
         <g>
         <rect
@@ -96,7 +95,6 @@ export default function TreeMapGen({data}) {
 }
 
 export function TreeMapDefault({data, color}) {
-    console.log(color)
     let formattedData = []
     data.forEach(d => {
         if(d.value>0.02){

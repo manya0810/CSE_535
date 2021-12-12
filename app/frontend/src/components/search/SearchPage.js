@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import CarouselGen, { VideoCarousel } from '../../utils/Carousel'
 import Navbar from '../navbar/Navbar'
 import './SearchPage.css'
@@ -8,8 +8,15 @@ import Pagination from '@mui/material/Pagination';
 import { Card, CardActionArea, CardContent, Typography } from '@mui/material'
 import Tweet from './Tweet'
 import PieChartGen from '../../utils/PieChart'
+import { poi } from '../../utils/Data'
 
 const url = 'http://127.0.0.1:5000'
+
+const PoiOptions = () => (
+    poi.map((p,index) => (
+        <option value={p.name} key={index}>{p.name}</option>
+    ))
+)
 
 const formatPieData = ({INDIA, MEXICO, USA}) => ([
     {'name': 'USA', 'value': USA},
@@ -39,7 +46,6 @@ const formatReplies = uTweets => {
             formattedTweets.push(t)
         }
     })
-    console.log(formattedTweets)
     return formattedTweets
 }
 
@@ -54,6 +60,12 @@ const SearchPage = () => {
     const [countryWisePoi, setCountryWisePoi] = useState([])
     const [currentItems, setCurrentItems] = useState([])
     const [currentPoiItems, setCurrentPoiItems] = useState([])
+    const [filteredTweets, setFilteredTweets] = useState([])
+    const [filteredPoiTweets, setFilteredPoiTweets] = useState([])
+    const [page, setPage] = useState(1)
+    const [countryFilterValue, setCountryFilterValue] = useState("")
+    const [languageFilterValue, setLanguageFilterValue] = useState("")
+    const [poiFilterValue, setPoiFilterValue] = useState("")
 
     const Analysis = () =>(
         <div className='analysis'>
@@ -104,11 +116,12 @@ const SearchPage = () => {
         let progressBar = document.getElementById('progressBar');
         progressBar.style.display = 'block';
         const query=e.target.elements.query?.value;
-        const poi=e.target.elements.poi?.value?'&poi='+e.target.elements.poi?.value:'';
-        const country=e.target.elements.country?.value?'&country='+e.target.elements.country?.value:'';
-        const language=e.target.elements.language?.value?'&language='+e.target.elements.language?.value:'';
-        const topic=e.target.elements.topic?.value?'&topic='+e.target.elements.topic?.value:'';
-        const params = `query=${query}${poi}${country}${language}${topic}`;
+        // const poi=e.target.elements.poi?.value?'&poi='+e.target.elements.poi?.value:'';
+        // const country=e.target.elements.country?.value?'&country='+e.target.elements.country?.value:'';
+        // const language=e.target.elements.language?.value?'&language='+e.target.elements.language?.value:'';
+        // const topic=e.target.elements.topic?.value?'&topic='+e.target.elements.topic?.value:'';
+        // const params = `query=${query}${poi}${country}${language}${topic}`;
+        const params = `query=${query}`;
         const encodedUrl = encodeURI(url+'/api/search?'+params);
         const res = await axios.get(encodedUrl);
         document.getElementById('searchResults').style.display = 'block';
@@ -125,49 +138,43 @@ const SearchPage = () => {
             setCountryWisePoi(formatPieData(res.data.poi_counts.country))
             setCurrentItems(formattedTweets.slice(0,10))
             setCurrentPoiItems(formattedPoiTweets.slice(0,10))
+            setFilteredPoiTweets(formattedPoiTweets)
+            setFilteredTweets(formattedTweets)
         }
         progressBar.style.display = 'none';
         
     }
 
     const handlePageChange = v => {
-        // setPage(v);
-        setCurrentItems(tweets.slice((v-1)*10,v*10))
-        setCurrentPoiItems(poiTweets.slice((v-1)*10,v*10))
+        setPage(v);
+        setCurrentItems(filteredTweets.slice((v-1)*10,v*10))
+        setCurrentPoiItems(filteredPoiTweets.slice((v-1)*10,v*10))
         window.scrollTo(0,document.body.scrollHeight);
     }
+
+    useEffect(() => {
+        let tempTweets = poiTweets.filter(t=>t.country?.includes(countryFilterValue))
+        tempTweets = tempTweets.filter(t=>t.tweet_lang?.includes(languageFilterValue))
+        tempTweets = tempTweets.filter(t=>t.poi_name?.includes(poiFilterValue))
+        setFilteredPoiTweets(tempTweets)
+
+        tempTweets = tweets.filter(t=>t.country?.includes(countryFilterValue))
+        tempTweets = tempTweets.filter(t=>t.tweet_lang?.includes(languageFilterValue))
+        setFilteredTweets(tempTweets)
+    }, [countryFilterValue, languageFilterValue, poiFilterValue])
+
+    useEffect(() => {
+        setCurrentPoiItems(filteredPoiTweets.slice((page-1)*10,page*10))
+    }, [filteredPoiTweets])
+
+    useEffect(() => {
+        setCurrentItems(filteredTweets.slice((page-1)*10,page*10))
+    }, [filteredTweets])
 
     return (
         <div>
             <Navbar />
             <form className="form" onSubmit={handleFormSubmit}>
-                <div className="formField filters">
-                    <div className="filtersText fbox">Filters:</div>
-                    <div className="filtersContainer fbox">
-                        <select id="poi" className="select">
-                            <option value="">POI...</option>
-                            <option value="modi">Modi</option>
-                            <option value="biden">Biden</option>
-                        </select>
-                        <select id="country" className="select">
-                            <option value="">Country...</option>
-                            <option value="india">India</option>
-                            <option value="usa">USA</option>
-                            <option value="mexico">Mexico</option>
-                        </select>
-                        <select id="language" className="select">
-                            <option value="">Language...</option>
-                            <option value="english">English</option>
-                            <option value="hindi">Hindi</option>
-                            <option value="spanish">Spanish</option>
-                        </select>
-                        <select id="topic" className="select">
-                            <option value="">Topic...</option>
-                            <option value="covid">Covid</option>
-                            <option value="vaccine">Vaccine</option>
-                        </select>
-                    </div>
-                </div>
                 <div className="formField search">
                     <input type='text' id='query' className="searchBar" placeholder="Search Tweets" required/>
                     <button  className="searchButton">Search</button>
@@ -179,6 +186,27 @@ const SearchPage = () => {
             <div id='searchResults' style={{display:'none'}}>
             <div className='extras' style={{height:'350px'}}>
                 {news.length>0?<NewsComp/>:''}{videos.length>0?<VideoComp/>:''}{wiki?<WikiComp/>:''}
+            </div>
+            <div className="formField filters">
+                <div className="filtersText fbox">Filters:</div>
+                <div className="filtersContainer fbox">
+                    <select id="country" className="select" onChange={e=>{setCountryFilterValue(e.target.value)}}>
+                        <option value="">Country...</option>
+                        <option value="INDIA">India</option>
+                        <option value="USA">USA</option>
+                        <option value="MEXICO">Mexico</option>
+                    </select>
+                    <select id="language" className="select" onChange={e=>{setLanguageFilterValue(e.target.value)}}>
+                        <option value="">Language...</option>
+                        <option value="en">English</option>
+                        <option value="hi">Hindi</option>
+                        <option value="es">Spanish</option>
+                    </select>
+                    <select id="poi" className="select" onChange={e=>{setPoiFilterValue(e.target.value)}}>
+                        <option value="">POI...</option>
+                        <PoiOptions />
+                    </select>
+                </div>
             </div>
             <div className='result'>
                 <div className='tweets'>

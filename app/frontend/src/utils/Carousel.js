@@ -8,7 +8,6 @@ import { CardActionArea } from '@mui/material';
 
 function CarouselGen({ items })
 {   
-    console.log(items)
     return (
         <Carousel autoPlay={false} animation="slide" indicators={false}>
             {
@@ -44,7 +43,6 @@ function Item({ item })
 
 export function VideoCarousel({ items })
 {   
-    console.log(items)
     return (
         <Carousel autoPlay={false} navButtonsAlwaysVisible animation="slide" indicators={false}>
             {
