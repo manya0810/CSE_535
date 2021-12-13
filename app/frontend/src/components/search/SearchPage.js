@@ -10,7 +10,8 @@ import Tweet from './Tweet'
 import { poi } from '../../utils/Data'
 import { BarGraphSingle } from '../../utils/BarGraphs'
 
-const url = 'http://127.0.0.1:5000'
+// const url = 'http://127.0.0.1:5000'
+const url = 'http://3.12.245.202:5000'
 
 const PoiOptions = () => (
     poi.map((p,index) => (
